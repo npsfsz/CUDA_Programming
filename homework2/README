@@ -1,0 +1,9 @@
+Calculate sum of an array
+
+Array size is 512M Int ranging from -10 to 10
+
+Calculate the sum on GPU, time the calculation on GPU, apply different optimizations on the code.
+
+1-2 Page report.
+
+Fastest gets a reward.
