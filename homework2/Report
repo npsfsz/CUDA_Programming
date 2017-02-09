@@ -1,0 +1,19 @@
+1. Problem
+Want to calculate the sum of a randomly generated array with 512M elements on GPU. Make sure of its correctness. Test and optimize its performance.
+
+Hardware:
+Nvidia Geforce GTX 980 w/ 2048 CUDA cores and 4 GB of Memory.
+
+2. Structures the problem
+The problem is really down to two parts:
+1) Develope an efficient algorithm/data structure to run this problem on GPU.
+
+2) Tweak the configuration of the code to achieve best optimization.
+
+//Handy material: sample code of reduction from Nvidia
+
+3. Algorithm
+
+4. Optimization
+
+5. Result
