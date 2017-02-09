@@ -13,7 +13,9 @@ The problem is really down to two parts:
 //Handy material: sample code of reduction from Nvidia
 
 3. Algorithm
-
+Basic idea: Divide and conquer.
+Try to map all elements to every possible core in order to utilize all cores. By this, each thread will handle a few elements from the array, add them and store the result in shared memory. Then do a second tier reduction, thrid tier reduction etc. Until the final answer is found. (i.e. in the end there should be only one number left)
+Total runtime O(n).
 4. Optimization
-
+Number of threads, number of blocks, number of tiers of reduction. Direction of Dim3 (vertial or horizontal)
 5. Result
