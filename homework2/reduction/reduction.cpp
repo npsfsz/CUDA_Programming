@@ -289,7 +289,7 @@ T benchmarkReduce(int  n,
 
         // execute the kernel
         reduce<T>(n, numThreads, numBlocks, whichKernel, d_idata, d_odata);
-
+        //       512m, 256,        64,        6,      in,            out
         // check if kernel execution generated an error
         getLastCudaError("Kernel execution failed");
         // Clear d_idata for later use as temporary buffer.

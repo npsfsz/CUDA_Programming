@@ -31,15 +31,16 @@ int main(){
 
 	//alloc mem on GPU
 	int *d_array;
-	cudaMalloc((void *)d_array, bytes);
+	cudaMalloc((void *)d_iarray, bytes);
+	cudaMalloc((void *)d_oarray, manBlocks * sizeof(int));
 
 	//copy data to GPU
 	cudaMemcpy(d_array, h_array, bytes, cudaMemcpyHostToDevice);
 
 	//do the work
 	//define struct
-	dim3 block(%d, %d);
-	dim3 grid(%d, %d, %d);
+	dim3 block(numThreads, 1, 1);
+	dim3 grid(numBlocks, 1, 1);
 	
 	//copy back the result
 
@@ -48,6 +49,107 @@ int main(){
 
 }
 
+
+__global__ reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
+    __shared__ int sdate[256]; //hard coded for now
+
+    // perform first level of reduction,
+    // reading from global memory, writing to shared memory
+    int tid = threadIdx.x;
+    int i = blockIdx.x*blockSize*2 + threadIdx.x;
+    int gridSize = blockSize*2*gridDim.x;
+
+    int mySum = 0;
+    
+    // we reduce multiple elements per thread.  The number is determined by the
+    // number of active thread blocks (via gridDim).  More blocks will result
+    // in a larger gridSize and therefore fewer elements per thread
+    while (i < n)
+    {
+        mySum += d_iarray[i];
+
+        // ensure we don't read out of bounds -- this is optimized away for powerOf2 sized arrays
+        if (i + blockSize < n)
+            mySum += d_iarray[i+blockSize];
+
+        i += gridSize;
+    }
+    
+    // each thread puts its local sum into shared memory
+    sdata[tid] = mySum;
+    __syncthreads();
+
+
+    // do reduction in shared mem
+    if ((blockSize >= 512) && (tid < 256))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid + 256];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >= 256) &&(tid < 128))
+    {
+            sdata[tid] = mySum = mySum + sdata[tid + 128];
+    }
+
+     __syncthreads();
+
+    if ((blockSize >= 128) && (tid <  64))
+    {
+       sdata[tid] = mySum = mySum + sdata[tid +  64];
+    }
+
+    __syncthreads();
+
+
+    // fully unroll reduction within a single warp
+    if ((blockSize >=  64) && (tid < 32))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid + 32];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=  32) && (tid < 16))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid + 16];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=  16) && (tid <  8))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  8];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   8) && (tid <  4))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  4];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   4) && (tid <  2))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  2];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   2) && ( tid <  1))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  1];
+    }
+
+    __syncthreads();
+
+    // write result for this block to global mem
+    if (tid == 0) d_oarray[blockIdx.x] = mySum;
+
+}
 /*
     This version adds multiple elements per thread sequentially.  This reduces the overall
     cost of the algorithm while keeping the work complexity O(n) and the step complexity O(log n).
@@ -179,7 +281,9 @@ void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThread
     else
     {
         threads = (n < maxThreads*2) ? nextPow2((n + 1)/ 2) : maxThreads;
+        //threads = 64 < 512 -> nextpow2(65/2) == 64
         blocks = (n + (threads * 2 - 1)) / (threads * 2);
+        //block4 = (64 + 127)/128
     }
 
     if ((float)threads*blocks > (float)prop.maxGridSize[0] * prop.maxThreadsPerBlock)
