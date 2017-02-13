@@ -217,7 +217,8 @@ __global__ reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
 */
 
 //copied from sample code, need modification
-template <class T, unsigned int blockSize, bool nIsPow2>
+
+/*template <class T, unsigned int blockSize, bool nIsPow2>
 __global__ void
 reduce6(T *g_idata, T *g_odata, unsigned int n)
 {
@@ -355,7 +356,7 @@ T reduceCPU(T *data, int size)
 
     return sum;
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 // Compute the number of threads and blocks to use for the given reduction kernel
 // For the kernels >= 3, we set threads / block to the minimum of maxThreads and
