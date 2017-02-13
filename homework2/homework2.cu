@@ -16,6 +16,16 @@ int* generateRandomArray(int num){
 
 }
 
+unsigned int nextPow2(unsigned int x)
+{
+    --x;
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    return ++x;
+}
 
 double CPUtime(){
        struct timeval tp;
@@ -337,16 +347,7 @@ void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThread
     }
 }
 
-unsigned int nextPow2(unsigned int x)
-{
-    --x;
-    x |= x >> 1;
-    x |= x >> 2;
-    x |= x >> 4;
-    x |= x >> 8;
-    x |= x >> 16;
-    return ++x;
-}
+
 int main(){
 
 	int *h_array = generateRandomArray(size); //512M size
