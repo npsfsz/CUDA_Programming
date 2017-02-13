@@ -364,7 +364,7 @@ int main(){
 	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	//alloc mem on GPU
 	//int *d_array;
-	cudaMalloc(d_iarray, bytes);
+	cudaMalloc((void *)d_iarray, (size_t)bytes);
 	cudaMalloc((void *)d_oarray, maxBlocks * sizeof(int));
 
 	//copy data to GPU
