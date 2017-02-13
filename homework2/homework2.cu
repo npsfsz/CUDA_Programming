@@ -349,8 +349,9 @@ void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThread
 
 
 int main(){
-
+    printf("Starting program... preparing array\n");
 	int *h_array = generateRandomArray(size); //512M size
+	printf("array generate complete\n");
 	int *d_iarray, *d_oarray;
 
 	int bytes = sizeof(int) * (int)size;
@@ -364,12 +365,13 @@ int main(){
 	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	//alloc mem on GPU
 	//int *d_array;
+	printf("copy data to GPU\n");
 	cudaMalloc((void **)d_iarray, (size_t)bytes);
 	cudaMalloc((void **)d_oarray, maxBlocks * sizeof(int));
 
 	//copy data to GPU
 	cudaMemcpy(d_iarray, h_array, bytes, cudaMemcpyHostToDevice);
-
+    printf("copy complete\n");
 	//do the work
 	
 	getNumBlocksAndThreads(6, size, maxBlocks, maxThreads, blocks, threads);
@@ -428,7 +430,7 @@ int main(){
 	// copy final sum from device to host
 	int gpu_result;
     cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
-    printf("final result is %d", gpu_result);
+    printf("final result is %d", &gpu_result);
     return 0;
 }
 
