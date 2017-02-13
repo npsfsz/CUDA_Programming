@@ -35,7 +35,7 @@ int main(){
   	d_iarray = (int*)malloc(bytes);
 	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	//alloc mem on GPU
-	int *d_array;
+	//int *d_array;
 	cudaMalloc((void *)d_iarray, bytes);
 	cudaMalloc((void *)d_oarray, maxBlocks * sizeof(int));
 
@@ -44,7 +44,7 @@ int main(){
 
 	//do the work
 	
-	getNumBlocksAndThreads(6, NUMBER, maxBlocks, maxThreads, blocks, threads);
+	getNumBlocksAndThreads(6, NUMBERS, maxBlocks, maxThreads, blocks, threads);
 	//define struct
 	dim3 block(threads, 1, 1);
 	dim3 grid(blocks, 1, 1);
@@ -54,10 +54,10 @@ int main(){
 	
 	
 	//first round of reduction
-	reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, size, 256);
+	reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, NUMBERS, 256);
 	
 	// Clear d_idata for later use as temporary buffer.
-    cudaMemset(d_iarray, 0, n*sizeof(int));
+    cudaMemset(d_iarray, 0, NUMBERS*sizeof(int));
     
     // sum partial block sums on GPU
     int s=blocks;
@@ -70,7 +70,7 @@ int main(){
         cudaMemcpy(d_iarray, d_oarray, s*sizeof(int), cudaMemcpyDeviceToDevice);//prepare new input date
         //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
         
-        int smemSize = (threads <= 32) ? 2 * threads * sizeof(T) : threads * sizeof(T);
+        int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
         reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, s, 32);
         //1 block 32 threads, 
 
@@ -98,14 +98,14 @@ int main(){
 	
 	// copy final sum from device to host
 	int gpu_result;
-    checkCudaErrors(cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost));
+    cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
     
     return 0;
 }
 
 
-__global__ reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
-    __shared__ int sdate[256]; //hard coded for now
+__global__ int reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
+    __shared__ int sdata[256]; //hard coded for now
 
     // perform first level of reduction,
     // reading from global memory, writing to shared memory
