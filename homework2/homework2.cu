@@ -2,7 +2,10 @@
 #include <math.h>
 #include <sys/time.h>
 
-#define NUMBERS 512*1024*1024 //2^29
+//2^29
+
+int size = 512*1024*1024;
+
 int* generateRandomArray(int num){
 	int *result;
 	result = (int*)malloc(sizeof(int) * num);
@@ -20,88 +23,6 @@ double CPUtime(){
        return ((double)tp.tv_sec + (double)tp.tv_usec * 1e-6);
 }
 
-int main(){
-
-	int *h_array = generateRandomArray(NUMBERS); //512M numbers
-	int *d_iarray, *d_oarray;
-
-	int bytes = sizeof(int) * (int)NUMBERS;
-	int maxThreads = 256; //number of threads per block
-	int maxBlocks = 64;
-	int blocks = 0; //the following two should be maximum
-	int threads = 0;
-
-
-  	d_iarray = (int*)malloc(bytes);
-	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
-	//alloc mem on GPU
-	//int *d_array;
-	cudaMalloc((void *)d_iarray, bytes);
-	cudaMalloc((void *)d_oarray, maxBlocks * sizeof(int));
-
-	//copy data to GPU
-	cudaMemcpy(d_iarray, h_array, bytes, cudaMemcpyHostToDevice);
-
-	//do the work
-	
-	getNumBlocksAndThreads(6, NUMBERS, maxBlocks, maxThreads, blocks, threads);
-	//define struct
-	dim3 block(threads, 1, 1);
-	dim3 grid(blocks, 1, 1);
-	// when there is only one warp per block, we need to allocate two warps
-    // worth of shared memory so that we don't index shared memory out of bounds
-    int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
-	
-	
-	//first round of reduction
-	reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, NUMBERS, 256);
-	
-	// Clear d_idata for later use as temporary buffer.
-    cudaMemset(d_iarray, 0, NUMBERS*sizeof(int));
-    
-    // sum partial block sums on GPU
-    int s=blocks;
-
-
-    while (s > 1)
-    {
-        int threads = 0, blocks = 0;
-        getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
-        cudaMemcpy(d_iarray, d_oarray, s*sizeof(int), cudaMemcpyDeviceToDevice);//prepare new input date
-        //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
-        
-        int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
-        reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, s, 32);
-        //1 block 32 threads, 
-
-
-
-        s = (s + (threads*2-1)) / (threads*2);
-
-        /*
-        if (s > 1)
-        {
-            // copy result from device to host
-            cudaMemcpy(h_odata, d_odata, s * sizeof(T), cudaMemcpyDeviceToHost);
-
-            for (int i=0; i < s; i++)
-            {
-                gpu_result += h_odata[i];
-            }
-
-            needReadBack = false;
-        }
-        */
-	}
-	cudaDeviceSynchronize();
-	
-	
-	// copy final sum from device to host
-	int gpu_result;
-    cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
-    
-    return 0;
-}
 
 
 __global__ 
@@ -426,3 +347,87 @@ unsigned int nextPow2(unsigned int x)
     x |= x >> 16;
     return ++x;
 }
+int main(){
+
+	int *h_array = generateRandomArray(size); //512M size
+	int *d_iarray, *d_oarray;
+
+	int bytes = sizeof(int) * (int)size;
+	int maxThreads = 256; //number of threads per block
+	int maxBlocks = 64;
+	int blocks = 0; //the following two should be maximum
+	int threads = 0;
+
+
+  	d_iarray = (int*)malloc(bytes);
+	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
+	//alloc mem on GPU
+	//int *d_array;
+	cudaMalloc((void *)d_iarray, bytes);
+	cudaMalloc((void *)d_oarray, maxBlocks * sizeof(int));
+
+	//copy data to GPU
+	cudaMemcpy(d_iarray, h_array, bytes, cudaMemcpyHostToDevice);
+
+	//do the work
+	
+	getNumBlocksAndThreads(6, size, maxBlocks, maxThreads, blocks, threads);
+	//define struct
+	dim3 block(threads, 1, 1);
+	dim3 grid(blocks, 1, 1);
+	// when there is only one warp per block, we need to allocate two warps
+    // worth of shared memory so that we don't index shared memory out of bounds
+    int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
+	
+	
+	//first round of reduction
+	reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, size, 256);
+	
+	// Clear d_idata for later use as temporary buffer.
+    cudaMemset(d_iarray, 0, size*sizeof(int));
+    
+    // sum partial block sums on GPU
+    int s=blocks;
+
+
+    while (s > 1)
+    {
+        int threads = 0, blocks = 0;
+        getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
+        cudaMemcpy(d_iarray, d_oarray, s*sizeof(int), cudaMemcpyDeviceToDevice);//prepare new input date
+        //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
+        
+        int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
+        reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, s, 32);
+        //1 block 32 threads, 
+
+
+
+        s = (s + (threads*2-1)) / (threads*2);
+
+        /*
+        if (s > 1)
+        {
+            // copy result from device to host
+            cudaMemcpy(h_odata, d_odata, s * sizeof(T), cudaMemcpyDeviceToHost);
+
+            for (int i=0; i < s; i++)
+            {
+                gpu_result += h_odata[i];
+            }
+
+            needReadBack = false;
+        }
+        */
+	}
+	cudaDeviceSynchronize();
+	
+	
+	// copy final sum from device to host
+	int gpu_result;
+    cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
+    
+    return 0;
+}
+
+
