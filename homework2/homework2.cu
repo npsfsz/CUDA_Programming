@@ -380,10 +380,10 @@ int main(){
     // worth of shared memory so that we don't index shared memory out of bounds
     int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
 	
-	
+	printf("first round of reduction\n");
 	//first round of reduction
 	reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, size, 256);
-	
+	printf("complete first round\n");
 	// Clear d_idata for later use as temporary buffer.
     cudaMemset(d_iarray, 0, size*sizeof(int));
     
@@ -399,9 +399,10 @@ int main(){
         //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
         
         int smemSize = (threads <= 32) ? 2 * threads * sizeof(int) : threads * sizeof(int);
+        printf("second round of reduction\n");
         reduce<<< grid, block, smemSize >>>(d_iarray, d_oarray, s, 32);
         //1 block 32 threads, 
-
+        printf("complete second round\n");
 
 
         s = (s + (threads*2-1)) / (threads*2);
