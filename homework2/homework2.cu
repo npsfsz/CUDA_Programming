@@ -24,14 +24,16 @@ int main(){
 
 	int *h_array = generateRandomArray(NUMBERS); //512M numbers
 	int *d_iarray, *d_oarray;
-	d_iarray = (int*)malloc(bytes);
-	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
+
 	int bytes = sizeof(int) * NUMBERS;
 	int maxThreads = 256; //number of threads per block
 	int maxBlocks = 64;
 	int blocks = 0; //the following two should be maximum
 	int threads = 0;
 
+
+  	d_iarray = (int*)malloc(bytes);
+	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	//alloc mem on GPU
 	int *d_array;
 	cudaMalloc((void *)d_iarray, bytes);
