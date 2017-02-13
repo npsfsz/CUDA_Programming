@@ -393,7 +393,7 @@ int main(){
     while (s > 1)
     {
         int threads = 0, blocks = 0;
-        getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
+        getNumBlocksAndThreads(6, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
         cudaMemcpy(d_iarray, d_oarray, s*sizeof(int), cudaMemcpyDeviceToDevice);//prepare new input date
         //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
         
