@@ -24,6 +24,8 @@ int main(){
 
 	int *h_array = generateRandomArray(NUMBERS); //512M numbers
 	int *d_iarray, *d_oarray;
+	d_iarray = (int*)malloc(bytes);
+	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	int bytes = sizeof(int) * NUMBERS;
 	int maxThreads = 256; //number of threads per block
 	int maxBlocks = 64;
@@ -33,7 +35,7 @@ int main(){
 	//alloc mem on GPU
 	int *d_array;
 	cudaMalloc((void *)d_iarray, bytes);
-	cudaMalloc((void *)d_oarray, manBlocks * sizeof(int));
+	cudaMalloc((void *)d_oarray, maxBlocks * sizeof(int));
 
 	//copy data to GPU
 	cudaMemcpy(d_array, h_array, bytes, cudaMemcpyHostToDevice);
