@@ -10,7 +10,7 @@ int* generateRandomArray(int num){
 	int *result;
 	result = (int*)malloc(sizeof(int) * num);
 	for (int i = 0; i < num; i++){
-		result[num] = rand() % 20 - 10;
+		result[num] = rand() % 20 - 9;
 	}
 	return result;
 
@@ -430,7 +430,7 @@ int main(){
 	// copy final sum from device to host
 	int gpu_result;
     cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
-    printf("final result is %d\n", &gpu_result);
+    printf("final result is %d\n", gpu_result);
     return 0;
 }
 
