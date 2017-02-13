@@ -23,6 +23,7 @@ double CPUtime(){
 int main(){
 
 	int *h_array = generateRandomArray(NUMBERS); //512M numbers
+	int *d_iarray, *d_oarray;
 	int bytes = sizeof(int) * NUMBERS;
 	int maxThreads = 256; //number of threads per block
 	int maxBlocks = 64;
