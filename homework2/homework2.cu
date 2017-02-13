@@ -430,7 +430,7 @@ int main(){
 	// copy final sum from device to host
 	int gpu_result;
     cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
-    printf("final result is %d", &gpu_result);
+    printf("final result is %d\n", &gpu_result);
     return 0;
 }
 
