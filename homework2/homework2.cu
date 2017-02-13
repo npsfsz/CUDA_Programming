@@ -49,7 +49,7 @@ int main(){
 	
 	
 	//first round of reduction
-	reduce6<<< dimGrid, dimBlock, smemSize >>>(d_iarray, d_oarray, size, 512);
+	reduce<<< dimGrid, dimBlock, smemSize >>>(d_iarray, d_oarray, size, 256);
 	
 	// Clear d_idata for later use as temporary buffer.
     cudaMemset(d_idata, 0, n*sizeof(T));
@@ -63,10 +63,10 @@ int main(){
         int threads = 0, blocks = 0;
         getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
         cudaMemcpy(d_idata, d_odata, s*sizeof(T), cudaMemcpyDeviceToDevice);//prepare new input date
-        reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
+        //reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
         
-        //int smemSize = (threads <= 32) ? 2 * threads * sizeof(T) : threads * sizeof(T);
-        //reduce6<T,  32, true><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, size);
+        int smemSize = (threads <= 32) ? 2 * threads * sizeof(T) : threads * sizeof(T);
+        reduce6<T,  32, true><<< dimGrid, dimBlock, smemSize >>>(d_iarray, d_oarray, s, 32);
         //1 block 32 threads, 
 
 
