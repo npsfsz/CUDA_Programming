@@ -36,8 +36,8 @@ double CPUtime(){
 
 
 
-__global__ 
-void reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
+__global__ void
+reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
     __shared__ int sdata[256]; //hard coded for now
 
     // perform first level of reduction,
