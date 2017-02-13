@@ -349,11 +349,10 @@ T benchmarkReduce(int  n,
         sdkStopTimer(&timer);
     }
 
-    if (needReadBack)
-    {
-        // copy final sum from device to host
-        checkCudaErrors(cudaMemcpy(&gpu_result, d_odata, sizeof(T), cudaMemcpyDeviceToHost));
-    }
+
+    // copy final sum from device to host
+    checkCudaErrors(cudaMemcpy(&gpu_result, d_odata, sizeof(T), cudaMemcpyDeviceToHost));
+
 
     return gpu_result;
 }

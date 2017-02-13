@@ -26,8 +26,8 @@ int main(){
 	int bytes = sizeof(int) * NUMBERS;
 	int maxThreads = 256; //number of threads per block
 	int maxBlocks = 64;
-	int numBlocks = 0; //the following two should be maximum
-	int numThreads = 0;
+	int blocks = 0; //the following two should be maximum
+	int threads = 0;
 
 	//alloc mem on GPU
 	int *d_array;
@@ -38,15 +38,60 @@ int main(){
 	cudaMemcpy(d_array, h_array, bytes, cudaMemcpyHostToDevice);
 
 	//do the work
-	//define struct
-	dim3 block(numThreads, 1, 1);
-	dim3 grid(numBlocks, 1, 1);
 	
-	//copy back the result
+	getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);
+	//define struct
+	dim3 block(threads, 1, 1);
+	dim3 grid(blocks, 1, 1);
+	// when there is only one warp per block, we need to allocate two warps
+    // worth of shared memory so that we don't index shared memory out of bounds
+    int smemSize = (threads <= 32) ? 2 * threads * sizeof(T) : threads * sizeof(T);
+	
+	
+	//first round of reduction
+	reduce6<<< dimGrid, dimBlock, smemSize >>>(d_iarray, d_oarray, size, 512);
+	
+	// Clear d_idata for later use as temporary buffer.
+    cudaMemset(d_idata, 0, n*sizeof(T));
+    
+    // sum partial block sums on GPU
+    int s=blocks;
+
+
+    while (s > 1)
+    {
+        int threads = 0, blocks = 0;
+        getNumBlocksAndThreads(kernel, s, maxBlocks, maxThreads, blocks, threads);//1 block 32 threads
+        cudaMemcpy(d_idata, d_odata, s*sizeof(T), cudaMemcpyDeviceToDevice);//prepare new input date
+        reduce<T>(s, threads, blocks, kernel, d_idata, d_odata);//reduce
+        
+        //int smemSize = (threads <= 32) ? 2 * threads * sizeof(T) : threads * sizeof(T);
+        //reduce6<T,  32, true><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, size);
+        //1 block 32 threads, 
 
 
 
+        s = (s + (threads*2-1)) / (threads*2);
 
+
+        if (s > 1)
+        {
+            // copy result from device to host
+            cudaMemcpy(h_odata, d_odata, s * sizeof(T), cudaMemcpyDeviceToHost);
+
+            for (int i=0; i < s; i++)
+            {
+                gpu_result += h_odata[i];
+            }
+
+            needReadBack = false;
+        }
+	}
+	cudaDeviceSynchronize();
+	
+	
+	// copy final sum from device to host
+    checkCudaErrors(cudaMemcpy(&gpu_result, d_odata, sizeof(T), cudaMemcpyDeviceToHost));
 }
 
 
@@ -101,8 +146,18 @@ __global__ reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
     }
 
     __syncthreads();
-
-
+#if (__CUDA_ARCH__ >= 300 )
+    if ( tid < 32 )
+    {
+        // Fetch final intermediate sum from 2nd warp
+        if (blockSize >=  64) mySum += sdata[tid + 32];
+        // Reduce final warp using shuffle
+        for (int offset = warpSize/2; offset > 0; offset /= 2) 
+        {
+            mySum += __shfl_down(mySum, offset);
+        }
+    }
+#else
     // fully unroll reduction within a single warp
     if ((blockSize >=  64) && (tid < 32))
     {
@@ -145,6 +200,7 @@ __global__ reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
     }
 
     __syncthreads();
+#endif
 
     // write result for this block to global mem
     if (tid == 0) d_oarray[blockIdx.x] = mySum;
@@ -216,18 +272,61 @@ reduce6(T *g_idata, T *g_odata, unsigned int n)
 
     __syncthreads();
 
-
+#if (__CUDA_ARCH__ >= 300 )
     if ( tid < 32 )
     {
         // Fetch final intermediate sum from 2nd warp
         if (blockSize >=  64) mySum += sdata[tid + 32];
         // Reduce final warp using shuffle
-        for (int offset = warpSize/2; offset > 0; offset /= 2)
+        for (int offset = warpSize/2; offset > 0; offset /= 2) 
         {
             mySum += __shfl_down(mySum, offset);
         }
     }
+#else
+    // fully unroll reduction within a single warp
+    if ((blockSize >=  64) && (tid < 32))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid + 32];
+    }
 
+    __syncthreads();
+
+    if ((blockSize >=  32) && (tid < 16))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid + 16];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=  16) && (tid <  8))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  8];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   8) && (tid <  4))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  4];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   4) && (tid <  2))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  2];
+    }
+
+    __syncthreads();
+
+    if ((blockSize >=   2) && ( tid <  1))
+    {
+        sdata[tid] = mySum = mySum + sdata[tid +  1];
+    }
+
+    __syncthreads();
+#endif
     // write result for this block to global mem
     if (tid == 0) g_odata[blockIdx.x] = mySum;
 }
