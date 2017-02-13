@@ -104,7 +104,8 @@ int main(){
 }
 
 
-__global__ int reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
+__global__ 
+void reduce(int *d_iarray, int *d_oarray, int n, int blockSize){
     __shared__ int sdata[256]; //hard coded for now
 
     // perform first level of reduction,
@@ -379,8 +380,8 @@ void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThread
     //get device capability, to avoid block/grid size exceed the upper bound
     cudaDeviceProp prop;
     int device;
-    checkCudaErrors(cudaGetDevice(&device));
-    checkCudaErrors(cudaGetDeviceProperties(&prop, device));
+    cudaGetDevice(&device);
+    cudaGetDeviceProperties(&prop, device);
 
     if (whichKernel < 3)
     {
@@ -411,6 +412,17 @@ void getNumBlocksAndThreads(int whichKernel, int n, int maxBlocks, int maxThread
 
     if (whichKernel == 6)
     {
-        blocks = MIN(maxBlocks, blocks);
+        blocks = min(maxBlocks, blocks);
     }
+}
+
+unsigned int nextPow2(unsigned int x)
+{
+    --x;
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    return ++x;
 }
