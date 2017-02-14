@@ -4,7 +4,7 @@
 all: build
 
 build: 
-	nvcc -g homework2.cu
+	nvcc -g -G homework2.cu
 
 run: build
 	./a.out
