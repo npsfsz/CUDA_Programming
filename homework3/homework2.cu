@@ -11,7 +11,7 @@ int* generateRandomArray(int num){
 	result = (int*)malloc(sizeof(int) * num);
 	for (int i = 0; i < num; i++){
 		//result[num] = rand() % 20 - 10;
-		result[num] = 1;
+		result[i] = 1;
 	}
 	return result;
 
