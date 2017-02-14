@@ -1,17 +1,19 @@
 #include <stdio.h>
 #include <math.h>
 #include <sys/time.h>
-
+#include <time.h>
 //2^29
 
 int size = 512*1024*1024;
 
 int* generateRandomArray(int num){
 	int *result;
+	time_t t;
+	srand((unsigned) time(&t));
 	result = (int*)malloc(sizeof(int) * num);
 	for (int i = 0; i < num; i++){
-		//result[num] = rand() % 20 - 10;
-		result[i] = 1;
+		result[i] = rand() % 21 -10;
+		//result[i] = 1;
 	}
 	return result;
 
@@ -355,23 +357,26 @@ int main(){
 	printf("array generate complete\n");
 	int *d_iarray, *d_oarray;
 
-	int bytes = sizeof(int) * (int)size;
+	int bytes = sizeof(int) * size;
+	//printf("%b\n", bytes);
 	int maxThreads = 256; //number of threads per block
 	int maxBlocks = 64;
 	int blocks = 0; //the following two should be maximum
 	int threads = 0;
 
 
-  	d_iarray = (int*)malloc(bytes);
-	d_oarray = (int*)malloc(maxBlocks*sizeof(int));
+  	//d_iarray = (int*)malloc(bytes);
+	//d_oarray = (int*)malloc(maxBlocks*sizeof(int));
 	//alloc mem on GPU
 	//int *d_array;
 	printf("copy data to GPU\n");
-	cudaMalloc((void **)d_iarray, (size_t)bytes);
-	cudaMalloc((void **)d_oarray, maxBlocks * sizeof(int));
+
+	cudaMalloc((void **)&d_iarray, size * sizeof(int));
+	//printf("1\n");
+	cudaMalloc((void **)&d_oarray, maxBlocks * sizeof(int));
 
 	//copy data to GPU
-	cudaMemcpy(d_iarray, h_array, bytes, cudaMemcpyHostToDevice);
+	cudaMemcpy(d_iarray, h_array, size * sizeof(int), cudaMemcpyHostToDevice);
     printf("copy complete\n");
 	//do the work
 	
@@ -431,7 +436,12 @@ int main(){
 	// copy final sum from device to host
 	int gpu_result;
     cudaMemcpy(&gpu_result, d_oarray, sizeof(int), cudaMemcpyDeviceToHost);
-    printf("final result is %d\n", gpu_result);
+    printf("final GPU result is %d\n", gpu_result);
+    int cpu_result;
+    for (int i = 0; i < size; i++){
+    	cpu_result += h_array[i];
+    }
+    printf("final CPU result is %d\n", cpu_result);
     return 0;
 }
 
