@@ -1,0 +1,247 @@
+Appendix:
+X-directioned
+grid 2, block 32, average time, first round 5653536.00, second round 17.00, total 5653553.00 result matches
+grid 2, block 64, average time, first round 2826396.00, second round 20.00, total 2826416.00 result matches
+grid 2, block 128, average time, first round 1414724.00, second round 16.00, total 1414740.00 result matches
+grid 2, block 256, average time, first round 707350.00, second round 16.00, total 707366.00 result matches
+grid 2, block 512, average time, first round 354508.00, second round 16.00, total 354524.00 result matches
+grid 2, block 1024, average time, first round 178510.00, second round 15.00, total 178525.00 result not match
+grid 2, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 2, block 4096, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 4, block 32, average time, first round 2831686.00, second round 18.00, total 2831704.00 result matches
+grid 4, block 64, average time, first round 1417014.00, second round 17.00, total 1417031.00 result matches
+grid 4, block 128, average time, first round 708524.00, second round 16.00, total 708540.00 result matches
+grid 4, block 256, average time, first round 355426.00, second round 18.00, total 355444.00 result matches
+grid 4, block 512, average time, first round 178612.00, second round 16.00, total 178628.00 result matches
+grid 4, block 1024, average time, first round 90190.00, second round 16.00, total 90206.00 result not match
+grid 4, block 2048, average time, first round 5.00, second round 18.00, total 23.00 result not match
+grid 4, block 4096, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 8, block 32, average time, first round 1416812.00, second round 19.00, total 1416831.00 result matches
+grid 8, block 64, average time, first round 708579.00, second round 17.00, total 708596.00 result matches
+grid 8, block 128, average time, first round 355034.00, second round 18.00, total 355052.00 result matches
+grid 8, block 256, average time, first round 178165.00, second round 17.00, total 178182.00 result matches
+grid 8, block 512, average time, first round 89701.00, second round 17.00, total 89718.00 result matches
+grid 8, block 1024, average time, first round 45629.00, second round 17.00, total 45646.00 result not match
+grid 8, block 2048, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 8, block 4096, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 16, block 32, average time, first round 708684.00, second round 18.00, total 708702.00 result matches
+grid 16, block 64, average time, first round 355293.00, second round 18.00, total 355311.00 result matches
+grid 16, block 128, average time, first round 178202.00, second round 18.00, total 178220.00 result matches
+grid 16, block 256, average time, first round 89526.00, second round 18.00, total 89544.00 result matches
+grid 16, block 512, average time, first round 45230.00, second round 20.00, total 45250.00 result matches
+grid 16, block 1024, average time, first round 23595.00, second round 17.00, total 23612.00 result not match
+grid 16, block 2048, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 16, block 4096, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 32, block 32, average time, first round 355415.00, second round 19.00, total 355434.00 result matches
+grid 32, block 64, average time, first round 178160.00, second round 17.00, total 178177.00 result matches
+grid 32, block 128, average time, first round 89592.00, second round 18.00, total 89610.00 result matches
+grid 32, block 256, average time, first round 45223.00, second round 18.00, total 45241.00 result matches
+grid 32, block 512, average time, first round 23604.00, second round 18.00, total 23622.00 result matches
+grid 32, block 1024, average time, first round 18998.00, second round 17.00, total 19015.00 result not match
+grid 32, block 2048, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 32, block 4096, average time, first round 4.00, second round 22.00, total 26.00 result not match
+grid 64, block 32, average time, first round 355414.00, second round 19.00, total 355433.00 result matches
+grid 64, block 64, average time, first round 178285.00, second round 19.00, total 178304.00 result matches
+grid 64, block 128, average time, first round 89620.00, second round 19.00, total 89639.00 result matches
+grid 64, block 256, average time, first round 45274.00, second round 19.00, total 45293.00 result matches
+grid 64, block 512, average time, first round 23607.00, second round 20.00, total 23627.00 result matches
+grid 64, block 1024, average time, first round 18507.00, second round 22.00, total 18529.00 result not match
+grid 64, block 2048, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 64, block 4096, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 128, block 32, average time, first round 355792.00, second round 20.00, total 355812.00 result matches
+grid 128, block 64, average time, first round 178574.00, second round 21.00, total 178595.00 result matches
+grid 128, block 128, average time, first round 89941.00, second round 19.00, total 89960.00 result matches
+grid 128, block 256, average time, first round 45400.00, second round 19.00, total 45419.00 result matches
+grid 128, block 512, average time, first round 23653.00, second round 20.00, total 23673.00 result matches
+grid 128, block 1024, average time, first round 18276.00, second round 19.00, total 18295.00 result not match
+grid 128, block 2048, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 128, block 4096, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 256, block 32, average time, first round 356558.00, second round 21.00, total 356579.00 result matches
+grid 256, block 64, average time, first round 179276.00, second round 21.00, total 179297.00 result matches
+grid 256, block 128, average time, first round 90151.00, second round 20.00, total 90171.00 result matches
+grid 256, block 256, average time, first round 45623.00, second round 21.00, total 45644.00 result matches
+grid 256, block 512, average time, first round 23883.00, second round 19.00, total 23902.00 result matches
+grid 256, block 1024, average time, first round 17950.00, second round 19.00, total 17969.00 result not match
+grid 256, block 2048, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 256, block 4096, average time, first round 4.00, second round 23.00, total 27.00 result not match
+grid 512, block 32, average time, first round 358521.00, second round 39.00, total 358560.00 result matches
+grid 512, block 64, average time, first round 179313.00, second round 25.00, total 179338.00 result matches
+grid 512, block 128, average time, first round 90425.00, second round 28.00, total 90453.00 result matches
+grid 512, block 256, average time, first round 45903.00, second round 39.00, total 45942.00 result matches
+grid 512, block 512, average time, first round 24139.00, second round 23.00, total 24162.00 result matches
+grid 512, block 1024, average time, first round 18419.00, second round 24.00, total 18443.00 result not match
+grid 512, block 2048, average time, first round 5.00, second round 26.00, total 31.00 result not match
+grid 512, block 4096, average time, first round 5.00, second round 26.00, total 31.00 result not match
+grid 1024, block 32, average time, first round 360298.00, second round 25.00, total 360323.00 result matches
+grid 1024, block 64, average time, first round 179795.00, second round 23.00, total 179818.00 result matches
+grid 1024, block 128, average time, first round 91180.00, second round 23.00, total 91203.00 result matches
+grid 1024, block 256, average time, first round 47172.00, second round 22.00, total 47194.00 result matches
+grid 1024, block 512, average time, first round 24216.00, second round 22.00, total 24238.00 result matches
+grid 1024, block 1024, average time, first round 18142.00, second round 24.00, total 18166.00 result not match
+grid 1024, block 2048, average time, first round 5.00, second round 23.00, total 28.00 result not match
+grid 1024, block 4096, average time, first round 5.00, second round 25.00, total 30.00 result not match
+
+
+y-directioned:
+grid 2, block 32, average time, first round 5652824.00, second round 18.00, total 5652842.00 result matches
+grid 2, block 64, average time, first round 2826849.00, second round 18.00, total 2826867.00 result matches
+grid 2, block 128, average time, first round 1414912.00, second round 19.00, total 1414931.00 result matches
+grid 2, block 256, average time, first round 707556.00, second round 19.00, total 707575.00 result matches
+grid 2, block 512, average time, first round 354293.00, second round 19.00, total 354312.00 result matches
+grid 2, block 1024, average time, first round 178761.00, second round 19.00, total 178780.00 result not match
+grid 2, block 2048, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 2, block 4096, average time, first round 5.00, second round 17.00, total 22.00 result not match
+grid 4, block 32, average time, first round 2831980.00, second round 19.00, total 2831999.00 result matches
+grid 4, block 64, average time, first round 1416058.00, second round 17.00, total 1416075.00 result matches
+grid 4, block 128, average time, first round 708716.00, second round 21.00, total 708737.00 result matches
+grid 4, block 256, average time, first round 355157.00, second round 21.00, total 355178.00 result matches
+grid 4, block 512, average time, first round 178794.00, second round 19.00, total 178813.00 result matches
+grid 4, block 1024, average time, first round 90255.00, second round 23.00, total 90278.00 result not match
+grid 4, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 4, block 4096, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 8, block 32, average time, first round 1416160.00, second round 28.00, total 1416188.00 result matches
+grid 8, block 64, average time, first round 708643.00, second round 22.00, total 708665.00 result matches
+grid 8, block 128, average time, first round 355169.00, second round 19.00, total 355188.00 result matches
+grid 8, block 256, average time, first round 178353.00, second round 21.00, total 178374.00 result matches
+grid 8, block 512, average time, first round 89764.00, second round 35.00, total 89799.00 result matches
+grid 8, block 1024, average time, first round 45655.00, second round 22.00, total 45677.00 result not match
+grid 8, block 2048, average time, first round 4.00, second round 23.00, total 27.00 result not match
+grid 8, block 4096, average time, first round 5.00, second round 21.00, total 26.00 result not match
+grid 16, block 32, average time, first round 708885.00, second round 22.00, total 708907.00 result matches
+grid 16, block 64, average time, first round 355118.00, second round 20.00, total 355138.00 result matches
+grid 16, block 128, average time, first round 178414.00, second round 22.00, total 178436.00 result matches
+grid 16, block 256, average time, first round 89592.00, second round 26.00, total 89618.00 result matches
+grid 16, block 512, average time, first round 45210.00, second round 20.00, total 45230.00 result matches
+grid 16, block 1024, average time, first round 23612.00, second round 21.00, total 23633.00 result not match
+grid 16, block 2048, average time, first round 4.00, second round 23.00, total 27.00 result not match
+grid 16, block 4096, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 32, block 32, average time, first round 355417.00, second round 22.00, total 355439.00 result matches
+grid 32, block 64, average time, first round 178300.00, second round 19.00, total 178319.00 result matches
+grid 32, block 128, average time, first round 89631.00, second round 18.00, total 89649.00 result matches
+grid 32, block 256, average time, first round 45234.00, second round 21.00, total 45255.00 result matches
+grid 32, block 512, average time, first round 23609.00, second round 18.00, total 23627.00 result matches
+grid 32, block 1024, average time, first round 19015.00, second round 18.00, total 19033.00 result not match
+grid 32, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 32, block 4096, average time, first round 4.00, second round 22.00, total 26.00 result not match
+grid 64, block 32, average time, first round 355691.00, second round 21.00, total 355712.00 result matches
+grid 64, block 64, average time, first round 178437.00, second round 20.00, total 178457.00 result matches
+grid 64, block 128, average time, first round 89745.00, second round 19.00, total 89764.00 result matches
+grid 64, block 256, average time, first round 45251.00, second round 19.00, total 45270.00 result matches
+grid 64, block 512, average time, first round 23638.00, second round 18.00, total 23656.00 result matches
+grid 64, block 1024, average time, first round 18498.00, second round 19.00, total 18517.00 result not match
+grid 64, block 2048, average time, first round 5.00, second round 21.00, total 26.00 result not match
+grid 64, block 4096, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 128, block 32, average time, first round 355993.00, second round 23.00, total 356016.00 result matches
+grid 128, block 64, average time, first round 178749.00, second round 19.00, total 178768.00 result matches
+grid 128, block 128, average time, first round 90087.00, second round 20.00, total 90107.00 result matches
+grid 128, block 256, average time, first round 45424.00, second round 19.00, total 45443.00 result matches
+grid 128, block 512, average time, first round 23682.00, second round 18.00, total 23700.00 result matches
+grid 128, block 1024, average time, first round 18252.00, second round 19.00, total 18271.00 result not match
+grid 128, block 2048, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 128, block 4096, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 256, block 32, average time, first round 356911.00, second round 33.00, total 356944.00 result matches
+grid 256, block 64, average time, first round 179488.00, second round 23.00, total 179511.00 result matches
+grid 256, block 128, average time, first round 90190.00, second round 20.00, total 90210.00 result matches
+grid 256, block 256, average time, first round 45598.00, second round 24.00, total 45622.00 result matches
+grid 256, block 512, average time, first round 23880.00, second round 28.00, total 23908.00 result matches
+grid 256, block 1024, average time, first round 17995.00, second round 21.00, total 18016.00 result not match
+grid 256, block 2048, average time, first round 3.00, second round 20.00, total 23.00 result not match
+grid 256, block 4096, average time, first round 4.00, second round 36.00, total 40.00 result not match
+grid 512, block 32, average time, first round 359368.00, second round 23.00, total 359391.00 result matches
+grid 512, block 64, average time, first round 179665.00, second round 21.00, total 179686.00 result matches
+grid 512, block 128, average time, first round 90428.00, second round 37.00, total 90465.00 result matches
+grid 512, block 256, average time, first round 45902.00, second round 21.00, total 45923.00 result matches
+grid 512, block 512, average time, first round 24117.00, second round 20.00, total 24137.00 result matches
+grid 512, block 1024, average time, first round 18409.00, second round 21.00, total 18430.00 result not match
+grid 512, block 2048, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 512, block 4096, average time, first round 5.00, second round 25.00, total 30.00 result not match
+grid 1024, block 32, average time, first round 360386.00, second round 21.00, total 360407.00 result matches
+grid 1024, block 64, average time, first round 179966.00, second round 24.00, total 179990.00 result matches
+grid 1024, block 128, average time, first round 91198.00, second round 21.00, total 91219.00 result matches
+grid 1024, block 256, average time, first round 47268.00, second round 22.00, total 47290.00 result matches
+grid 1024, block 512, average time, first round 24241.00, second round 21.00, total 24262.00 result matches
+grid 1024, block 1024, average time, first round 18124.00, second round 24.00, total 18148.00 result not match
+grid 1024, block 2048, average time, first round 4.00, second round 23.00, total 27.00 result not match
+grid 1024, block 4096, average time, first round 4.00, second round 25.00, total 29.00 result not match
+
+z:
+grid 2, block 32, average time, first round 5657133.00, second round 18.00, total 5657151.00 result matches
+grid 2, block 64, average time, first round 2827636.00, second round 16.00, total 2827652.00 result matches
+grid 2, block 128, average time, first round 5.00, second round 17.00, total 22.00 result not match
+grid 2, block 256, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 2, block 512, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 2, block 1024, average time, first round 5.00, second round 18.00, total 23.00 result not match
+grid 2, block 2048, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 2, block 4096, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 4, block 32, average time, first round 2830789.00, second round 17.00, total 2830806.00 result matches
+grid 4, block 64, average time, first round 1415577.00, second round 17.00, total 1415594.00 result matches
+grid 4, block 128, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 4, block 256, average time, first round 5.00, second round 18.00, total 23.00 result not match
+grid 4, block 512, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 4, block 1024, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 4, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 4, block 4096, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 8, block 32, average time, first round 1415535.00, second round 17.00, total 1415552.00 result matches
+grid 8, block 64, average time, first round 707934.00, second round 18.00, total 707952.00 result matches
+grid 8, block 128, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 8, block 256, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 8, block 512, average time, first round 4.00, second round 18.00, total 22.00 result not match
+grid 8, block 1024, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 8, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 8, block 4096, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 16, block 32, average time, first round 707973.00, second round 18.00, total 707991.00 result matches
+grid 16, block 64, average time, first round 354543.00, second round 19.00, total 354562.00 result matches
+grid 16, block 128, average time, first round 5.00, second round 21.00, total 26.00 result not match
+grid 16, block 256, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 16, block 512, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 16, block 1024, average time, first round 4.00, second round 22.00, total 26.00 result not match
+grid 16, block 2048, average time, first round 4.00, second round 19.00, total 23.00 result not match
+grid 16, block 4096, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 32, block 32, average time, first round 354560.00, second round 18.00, total 354578.00 result matches
+grid 32, block 64, average time, first round 177880.00, second round 20.00, total 177900.00 result matches
+grid 32, block 128, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 32, block 256, average time, first round 5.00, second round 22.00, total 27.00 result not match
+grid 32, block 512, average time, first round 5.00, second round 19.00, total 24.00 result not match
+grid 32, block 1024, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 32, block 2048, average time, first round 5.00, second round 25.00, total 30.00 result not match
+grid 32, block 4096, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 64, block 32, average time, first round 354998.00, second round 20.00, total 355018.00 result matches
+grid 64, block 64, average time, first round 178199.00, second round 20.00, total 178219.00 result matches
+grid 64, block 128, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 64, block 256, average time, first round 5.00, second round 21.00, total 26.00 result not match
+grid 64, block 512, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 64, block 1024, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 64, block 2048, average time, first round 5.00, second round 22.00, total 27.00 result not match
+grid 64, block 4096, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 128, block 32, average time, first round 355557.00, second round 21.00, total 355578.00 result matches
+grid 128, block 64, average time, first round 178467.00, second round 21.00, total 178488.00 result matches
+grid 128, block 128, average time, first round 5.00, second round 20.00, total 25.00 result not match
+grid 128, block 256, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 128, block 512, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 128, block 1024, average time, first round 4.00, second round 20.00, total 24.00 result not match
+grid 128, block 2048, average time, first round 4.00, second round 21.00, total 25.00 result not match
+grid 128, block 4096, average time, first round 5.00, second round 22.00, total 27.00 result not match
+grid 256, block 32, average time, first round 356398.00, second round 3.00, total 356401.00 result not match
+grid 256, block 64, average time, first round 179166.00, second round 3.00, total 179169.00 result not match
+grid 256, block 128, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 256, block 256, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 256, block 512, average time, first round 4.00, second round 3.00, total 7.00 result not match
+grid 256, block 1024, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 256, block 2048, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 256, block 4096, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 512, block 32, average time, first round 358596.00, second round 2.00, total 358598.00 result not match
+grid 512, block 64, average time, first round 179621.00, second round 3.00, total 179624.00 result not match
+grid 512, block 128, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 512, block 256, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 512, block 512, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 512, block 1024, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 512, block 2048, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 512, block 4096, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 1024, block 32, average time, first round 359245.00, second round 2.00, total 359247.00 result not match
+grid 1024, block 64, average time, first round 179783.00, second round 3.00, total 179786.00 result not match
+grid 1024, block 128, average time, first round 4.00, second round 2.00, total 6.00 result not match
+grid 1024, block 256, average time, first round 4.00, second round 3.00, total 7.00 result not match
+grid 1024, block 512, average time, first round 4.00, second round 1.00, total 5.00 result not match
+grid 1024, block 1024, average time, first round 5.00, second round 2.00, total 7.00 result not match
+grid 1024, block 2048, average time, first round 4.00, second round 3.00, total 7.00 result not match
+grid 1024, block 4096, average time, first round 5.00, second round 4.00, total 9.00 result not match
