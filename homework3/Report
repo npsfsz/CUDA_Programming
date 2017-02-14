@@ -8,14 +8,46 @@ Nvidia Geforce GTX 980 w/ 2048 CUDA cores and 4 GB of Memory.
 The problem is really down to two parts:
 1) Develope an efficient algorithm/data structure to run this problem on GPU.
 
-2) Tweak the configuration of the code to achieve best optimization.
+2) Tweak the code to achieve best performance.
 
-//Handy material: sample code of reduction from Nvidia
+//Handy material: Nvidia sample code of reduction
 
 3. Algorithm
 Basic idea: Divide and conquer.
-Try to map all elements to every possible core in order to utilize all cores. By this, each thread will handle a few elements from the array, add them and store the result in shared memory. Then do a second tier reduction, thrid tier reduction etc. Until the final answer is found. (i.e. in the end there should be only one number left)
+Try to map all elements to every possible core in order to utilize all cores. By this, each thread will handle a few elements from the array, add them and store the result in shared memory. Then do a second tier reduction to add up all intermediate results from the shared memory. 
+
+First round will reduce number of elements to 64, second round will add up the 64 elements.
+
 Total runtime O(n).
+
 4. Optimization
-Number of threads, number of blocks, number of tiers of reduction. Direction of Dim3 (vertial or horizontal)
+Number of threads, number of blocks, number of tiers of reduction. Direction of Dim3 (vertial or horizontal). Size of shared memory.
+
 5. Result
+
+1. Shared memory
+The size of shared memory does not really affect the performance. However the maximum size is 0xc000 bytes, which is 12288 integers.
+
+2. Direction of grid and block
+Change of direction did not affect performance much.
+
+3. Different number of grid/block
+x-diredctioned grid and block:
+grid 32, block 512, average time, first round 23604.00, second round 18.00, total 23622.00 result matches
+32 blocks with 512 threads in each has the best performance. It achieves a 23622us runtime.
+
+y-directioned:
+grid 32, block 512, average time, first round 23609.00, second round 18.00, total 23627.00 result matches
+32 blocks with 512 threads in each has the best performance. It achieves a 23627us runtime.
+
+z-directioned:
+Z direction does not have simillar result as the previous two. It cannot run under most grid/block configuration.
+grid 32, block 64, average time, first round 177880.00, second round 20.00, total 177900.00 result matches
+32 blocks with 64 threads in each has the best performance. It achieves a 177900us runtime.
+
+A problem is noticed where the number of threads is larger than 512, the GPU produced result will not match the CPU result. This is due to a bug in the function, and I was not able to fix it because Nsight cannot set breakpoints in kernel functions.
+
+Overall best result:
+Using x-directioned grid and block, 32 blocks with 512 threads in each. Setting shared memory to 1024 integers acquires the best result. Average runtime of 20 iterations is 23599us.
+
+
